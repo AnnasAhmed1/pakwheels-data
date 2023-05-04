@@ -59,8 +59,6 @@ export default function Main() {
     document.body.removeChild(anchor);
   };
 
-
-
   return (
     <>
       <br />
@@ -68,15 +66,14 @@ export default function Main() {
         PakWheels New Cars
       </h1>
       <p
-      style={{
-        margin:"10px 0",
-        display:"flex",
-        gap:"10px",
-        justifyContent:"center"
-        
-      }}
+        style={{
+          margin: "10px 0",
+          display: "flex",
+          gap: "10px",
+          justifyContent: "center",
+        }}
       >
-        Download excel file from here 
+        Download excel file from here
         <button onClick={() => downloadExcelFile(firstHalf)}>
           Download Excel file
         </button>
@@ -94,7 +91,7 @@ export default function Main() {
           <th>Price</th>
         </tr>
         {firstHalf?.map((v: any, i: any) => (
-          <tr>
+          <tr key={i}>
             <td
               style={{
                 textAlign: "center",
