@@ -29,7 +29,7 @@ export default function Main() {
       setCarPrice([...carPrice]);
     });
     const halfIndex = Math.ceil(carName.length / 2);
-    setFirstHalf(carName.slice(0, halfIndex - 5));
+    setFirstHalf(carName);
   }
   useEffect(() => {
     if (typeof window !== "undefined") {
