@@ -6,11 +6,9 @@ export default function Main() {
   const cheerio = require("cheerio");
   const [carName, setCarName] = useState<any>([]);
   const [carPrice, setCarPrice] = useState<any>([]);
-  const [firstHalf, setFirstHalf] = useState<any>([]);
+  const [finalObj, setFinalObj] = useState<any>([]);
 
   async function getData() {
-    setCarName([]);
-    setCarPrice([]);
     const url = "https://www.pakwheels.com/new-cars";
     const response = await axios.get(url);
     const html = response.data;
@@ -28,13 +26,16 @@ export default function Main() {
       carPrice.push(data);
       setCarPrice([...carPrice]);
     });
-    const halfIndex = Math.ceil(carName.length / 2);
-    setFirstHalf(carName.slice(0, carName.length - 5));
+    carPrice?.map((v?: any, i?: any) => {
+      finalObj.push({
+        carName: carName[i],
+        carPrice: v,
+      });
+      setFinalObj([...finalObj]);
+    });
   }
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      getData();
-    }
+    getData();
   }, []);
 
   const downloadExcelFile = (data?: any) => {
@@ -74,7 +75,7 @@ export default function Main() {
         }}
       >
         Download excel file from here
-        <button onClick={() => downloadExcelFile(firstHalf)}>
+        <button onClick={() => downloadExcelFile(finalObj)}>
           Download Excel file
         </button>
       </p>
@@ -90,7 +91,7 @@ export default function Main() {
           <th>Car Name</th>
           <th>Price</th>
         </tr>
-        {firstHalf?.map((v: any, i: any) => (
+        {finalObj?.map((v: any, i: any) => (
           <tr key={i}>
             <td
               style={{
@@ -99,8 +100,8 @@ export default function Main() {
             >
               {i + 1}
             </td>
-            <td>{v}</td>
-            <td>{carPrice[i]}</td>
+            <td>{v.carName}</td>
+            <td>{v.carPrice}</td>
           </tr>
         ))}
       </table>
